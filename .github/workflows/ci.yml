@@ -1,0 +1,48 @@
+name: Java CI with Maven & Coverage Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    name: Build, Test & Check Coverage
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: bibliotecahonorato_db
+          POSTGRES_USER: dev_user
+          POSTGRES_PASSWORD: dev_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Rodar Testes e Validar Cobertura (JaCoCo)
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: bibliotecahonorato_db
+          DB_USER: dev_user
+          DB_PASSWORD: dev_password
+          JWT_SECRET: secret_default_dev_apenas_para_ambiente_local_32_bytes
+        run: mvn clean verify

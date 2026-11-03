@@ -1,13 +1,16 @@
 package br.com.bibliotecahonoratobackend;
 
+import br.com.bibliotecahonoratobackend.config.SecurityProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 @EnableCaching
+@EnableConfigurationProperties(SecurityProperties.class)
 public class Startup {
 
     private static final Logger logger = LoggerFactory.getLogger(Startup.class);
