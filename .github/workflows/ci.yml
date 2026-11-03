@@ -45,4 +45,4 @@ jobs:
           DB_USER: dev_user
           DB_PASSWORD: dev_password
           JWT_SECRET: secret_default_dev_apenas_para_ambiente_local_32_bytes
-        run: ./mvnw clean verify
+        run: mvn clean verify
