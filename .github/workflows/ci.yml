@@ -37,9 +37,6 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Dar permissão de execução ao Maven Wrapper
-        run: chmod +x mvnw
-
       - name: Rodar Testes e Validar Cobertura (JaCoCo)
         env:
           DB_HOST: localhost
